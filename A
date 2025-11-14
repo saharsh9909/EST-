@@ -1,0 +1,21 @@
+import java.util.*;
+
+public class AutoBoxingSum {
+    public static void main(String[] args) {
+        String[] arr = {"10", "20", "30", "40"};
+        List<Integer> numbers = new ArrayList<>();
+
+        // Parsing Strings into Integer Wrapper Objects
+        for (String s : arr) {
+            Integer num = Integer.parseInt(s); // wrapper conversion
+            numbers.add(num); // autoboxing
+        }
+
+        int sum = 0;
+        for (Integer i : numbers) {
+            sum += i; // unboxing
+        }
+
+        System.out.println("Sum = " + sum);
+    }
+}
