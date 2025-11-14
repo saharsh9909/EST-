@@ -1,0 +1,84 @@
+import java.io.*;
+import java.util.*;
+
+class Employee {
+    String name, id, designation;
+    double salary;
+
+    Employee(String name, String id, String designation, double salary) {
+        this.name = name;
+        this.id = id;
+        this.designation = designation;
+        this.salary = salary;
+    }
+
+    public String toString() {
+        return name + "," + id + "," + designation + "," + salary;
+    }
+}
+
+public class EmployeeMenu {
+    static final String FILE = "employees.txt";
+
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n1. Add Employee");
+            System.out.println("2. Display All");
+            System.out.println("3. Exit");
+            System.out.print("Enter choice: ");
+
+            int ch = sc.nextInt();
+            sc.nextLine();
+
+            switch (ch) {
+                case 1:
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter ID: ");
+                    String id = sc.nextLine();
+                    System.out.print("Enter Designation: ");
+                    String des = sc.nextLine();
+                    System.out.print("Enter Salary: ");
+                    double sal = sc.nextDouble();
+
+                    Employee e = new Employee(name, id, des, sal);
+
+                    FileWriter fw = new FileWriter(FILE, true);
+                    fw.write(e.toString() + "\n");
+                    fw.close();
+
+                    System.out.println("Employee Added.");
+                    break;
+
+                case 2:
+                    File f = new File(FILE);
+                    if (!f.exists()) {
+                        System.out.println("No Employee Data Found.");
+                        break;
+                    }
+
+                    BufferedReader br = new BufferedReader(new FileReader(FILE));
+                    String line;
+                    System.out.println("\n--- Employee Details ---");
+                    while ((line = br.readLine()) != null) {
+                        String[] d = line.split(",");
+                        System.out.println("Name: " + d[0] +
+                                           ", ID: " + d[1] +
+                                           ", Designation: " + d[2] +
+                                           ", Salary: " + d[3]);
+                    }
+                    br.close();
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+        }
+    }
+}
