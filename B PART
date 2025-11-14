@@ -1,0 +1,33 @@
+import java.io.*;
+
+class Student implements Serializable {
+    String name;
+    int roll;
+
+    Student(String name, int roll) {
+        this.name = name;
+        this.roll = roll;
+    }
+}
+
+public class StudentSerialization {
+    public static void main(String[] args) {
+        Student s1 = new Student("Rohan", 101);
+
+        // Serialization
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("student.dat"));
+            out.writeObject(s1);
+            out.close();
+            System.out.println("Serialization Done");
+        } catch (Exception e) { e.printStackTrace(); }
+
+        // Deserialization
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("student.dat"));
+            Student s2 = (Student) in.readObject();
+            in.close();
+            System.out.println("Deserialized Student: " + s2.name + " " + s2.roll);
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+}
